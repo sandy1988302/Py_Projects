@@ -11,22 +11,12 @@ class DB:
 
     def __enter__(self):
         # 返回游标
-        print("调用enter")
         return self.cur
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # 提交数据库并执行
-        print("调用前面返回对象的exit")
         self.conn.commit()
         # 关闭游标
         self.cur.close()
         # 关闭数据库连接
         self.conn.close()
-
-
-if __name__ == '__main__':
-    with DB(host="localhost", user="root", password="1qaz@WSX", database="sakila", port=3306) as db:
-        db.execute('select * from actor')
-        print(db)
-        for i in db:
-            print(i)
