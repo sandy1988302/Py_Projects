@@ -1,9 +1,10 @@
 from selenium import webdriver
-from tools import get_element
 from time import sleep
+from tools.get_connect import DB
+from tools import get_element
 
 
-def exp_print(f, webdriver_path, options, open_mode):
+def exp_db(db, localtime, webdriver_path, options):
     driver = webdriver.Chrome(executable_path=webdriver_path,
                               options=options)
     # 打开的网站
@@ -20,14 +21,15 @@ def exp_print(f, webdriver_path, options, open_mode):
             b = int(30 - a)
             a = a + 31
 
-    with open(f, open_mode) as hotwords:
-        # 抓取所有的热搜标题
-        hotwords.write('\n' + "百度热搜:" + '\n')
+    with DB(host=db[0], user=db[1], password=db[2], database=db[3], port=db[4]) as cursor:
+        # 抓取10条新闻热搜词
         i = int(1)
         while i <= b:
-            word = driver.find_element_by_xpath('//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) +
-                                                ']/div[2]/a').get_attribute('text')
-            hotwords.write("{0:<2} {1}".format(i, word) + '\n')
+            word = driver.find_element_by_xpath(
+                '//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) + ']/div[2]/a').get_attribute('text')
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
+                  + str(i) + ",'" + word + "','百度热搜','" + localtime + "')"
+            cursor.execute(sql)
             i += 1
 
     driver.quit()

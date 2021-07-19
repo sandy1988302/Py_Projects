@@ -17,25 +17,21 @@ def exp_print(f, webdriver_path, options, open_mode):
 
     with open(f, open_mode) as hotwords:
         # 抓取10条新闻热搜词,每条按照左对齐 (宽度为2)依次写入文件，加上换行
-        hotword = {}
         hotwords.write("新闻热搜词:" + '\n')
         i = int(1)
         while i <= 10:
             word = driver.find_element_by_xpath('//ul[@class="hotwords clearfix"]/li[' + str(i) + ']/a'). \
                 get_attribute('title')
-            hotword[i] = word
-            hotwords.write("{0:<2} {1}".format(i, hotword[i]) + '\n')
+            hotwords.write("{0:<2} {1}".format(i, word) + '\n')
             i += 1
 
         # 抓取5条（国内）热门点击,每条依次写入文件，加上换行
-        hotword = {}
         hotwords.write('\n' + "国内热门点击:" + '\n')
         i = int(1)
         while i <= 5:
             word = driver.find_element_by_xpath('//*[@id="civil-aside-tophit"]/div[2]/ol/li[' + str(i) + ']/a'). \
                 get_attribute('title')
-            hotword[i] = word
-            hotwords.write("{0:<2} {1}".format(i, hotword[i]) + '\n')
+            hotwords.write("{0:<2} {1}".format(i, word) + '\n')
             i += 1
 
         # 抓取10条国际热搜词（网页左右各两列,注意格式化需要使用中文空格作为填充字符）,每条依次写入文件，加上换行
@@ -56,12 +52,10 @@ def exp_print(f, webdriver_path, options, open_mode):
         # 抓取5条（军事）热门点击,每条依次写入文件，加上换行
         hotwords.write('\n' + "军事热门点击:" + '\n')
         i = int(1)
-        hotword = {}
         while i <= 5:
             word = driver.find_element_by_xpath('//*[@id="mil-aside-video"]/div[2]/ol/li[' + str(i) + ']/a'). \
                 get_attribute('title')
-            hotword[i] = word
-            hotwords.write("{0:<2} {1}".format(i, hotword[i]) + '\n')
+            hotwords.write("{0:<2} {1}".format(i, word) + '\n')
             i += 1
 
     driver.quit()
