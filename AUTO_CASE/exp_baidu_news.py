@@ -19,7 +19,7 @@ def exp_db(db, localtime):
     # 打开的网站
     driver.get("http://news.baidu.com/")
     driver.maximize_window()
-
+    sleep(3)
     for i in range(0, 50):
         driver.find_element_by_tag_name('body').send_keys(Keys.ARROW_DOWN)  # 在这里使用模拟的下方向键
         sleep(0.1)
@@ -33,7 +33,7 @@ def exp_db(db, localtime):
             hotword[i] = word
             print(hotword[i])
             # 使用预处理语句创建表
-            sql = "INSERT INTO BAIDU_NEWS(NEW_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
                   + str(i) + ",'" + hotword[i] + "','新闻热搜词','" + localtime + "')"
             cursor.execute(sql)
             i += 1
