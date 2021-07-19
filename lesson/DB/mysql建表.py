@@ -1,11 +1,12 @@
 import pymysql
 
+
 # 打开数据库连接
 db = pymysql.connect(host="localhost", user="root", password="1qaz@WSX", database="sakila")
 # 使用cursor()方法获取操作游标
 cursor = db.cursor()
 # SQL 更新语句
-sql = "CREATE TABLE BAIDU_NEWS(NEW_RANK INT NOT NULL,TITLE CHAR(60) NOT NULL,CATEGORY CHAR(20) NOT NULL," \
+sql = "CREATE TABLE BAIDU_NEWS(NEWS_RANK INT NOT NULL,TITLE CHAR(60) NOT NULL,CATEGORY CHAR(20) NOT NULL," \
       "CRAWLING_TIME DATETIME NOT NULL) "
 try:
     # 执行SQL语句
