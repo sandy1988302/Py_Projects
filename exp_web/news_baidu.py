@@ -9,6 +9,7 @@ def exp_print(f, webdriver_path, options, open_mode):
     # 打开的网站
     driver.get("http://news.baidu.com/")
     driver.maximize_window()
+    sleep(2)
     # 模拟页面滚动，使得页面动态生成完全
     for i in range(0, 100):
         driver.find_element_by_tag_name('body').send_keys(Keys.ARROW_DOWN)  # 在这里使用模拟的下方向键
