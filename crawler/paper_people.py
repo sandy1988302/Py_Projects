@@ -1,12 +1,11 @@
 import requests
 import bs4
 import os
-import datetime
 import time
 from tools import get_days
 
 
-def fetchUrl(url):
+def fetch_url(url):
     """
     功能：访问 人民日报 的网页，获取网页内容并返回
     参数：目标网页的 url
@@ -23,13 +22,13 @@ def fetchUrl(url):
     return r.text
 
 
-def getPageList(y, m, d):
+def get_page_list(y, m, d):
     """
     功能：获取当天报纸的各版面的链接列表
     参数：年，月，日
     """
     url = 'http://paper.people.com.cn/rmrb/html/' + y + '-' + m + '/' + d + '/nbs.D110000renmrb_01.htm'
-    html = fetchUrl(url)
+    html = fetch_url(url)
     bsobj = bs4.BeautifulSoup(html, 'html.parser')
     temp = bsobj.find('div', attrs={'id': 'page_list'})
     if temp:
@@ -46,12 +45,12 @@ def getPageList(y, m, d):
     return link_list
 
 
-def getTitleList(y, m, d, page_url):
+def get_title_list(y, m, d, page_url):
     """
     功能：获取报纸某一版面的文章链接列表
     参数：年，月，日，该版面的链接
     """
-    html = fetchUrl(page_url)
+    html = fetch_url(page_url)
     bsobj = bs4.BeautifulSoup(html, 'html.parser')
     temp = bsobj.find('div', attrs={'id': 'title_list'})
     if temp:
@@ -70,7 +69,7 @@ def getTitleList(y, m, d, page_url):
     return link_list
 
 
-def getContent(html):
+def get_content(html):
     """
     功能：解析 HTML 网页，获取新闻的文章内容
     参数：html 网页内容
@@ -90,7 +89,7 @@ def getContent(html):
     return resp
 
 
-def saveFile(content, path, filename):
+def save_file(content, path, filename):
     """
     功能：将文章内容 content 保存到本地文件中
     参数：要保存的内容，路径，文件名
@@ -108,13 +107,13 @@ def download_rmrb(y, m, d, download_dir):
     功能：爬取《人民日报》网站 某年 某月 某日 的新闻内容，并保存在 本文件同级的data目录下
     参数：年，月，日，文件保存的根目录
     """
-    page_list = getPageList(y, m, d)
+    page_list = get_page_list(y, m, d)
     for page in page_list:
-        title_list = getTitleList(y, m, d, page)
+        title_list = get_title_list(y, m, d, page)
         for url in title_list:
             # 获取新闻文章内容
-            html = fetchUrl(url)
-            content = getContent(html)
+            html = fetch_url(url)
+            content = get_content(html)
             # 生成保存的文件路径及文件名
             temp = url.split('_')[2].split('.')[0].split('-')
             page_no = temp[1]
@@ -122,7 +121,7 @@ def download_rmrb(y, m, d, download_dir):
             path = download_dir + '/' + y + m + d + '/'
             file_name = y + m + d + '-' + page_no + '-' + title_no + '.txt'
             # 保存文件
-            saveFile(content, path, file_name)
+            save_file(content, path, file_name)
 
 
 if __name__ == '__main__':

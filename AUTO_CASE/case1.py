@@ -5,7 +5,7 @@ def gen_dates(b_date, days):
     delta = datetime.timedelta(days=1)
     for i in range(days):
         print("gen_dates:" + str(b_date + delta * i))
-        return b_date + delta * i
+        yield b_date + delta * i
 # yield
 
 
