@@ -21,47 +21,52 @@ def exp_db(db, localtime, webdriver_path, options):
         while i <= 10:
             word = driver.find_element_by_xpath('//ul[@class="hotwords clearfix"]/li[' + str(i) + ']/a'). \
                 get_attribute('title')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i) + ",'" + word + "','新闻热搜词','" + localtime + "')"
+            link = "https://www.baidu.com/s?wd=" + word
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i) + ",'" + word + "','新闻热搜词','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 
         # 抓取5条（国内）热门点击
         i = int(1)
         while i <= 5:
-            word = driver.find_element_by_xpath('//*[@id="civil-aside-tophit"]/div[2]/ol/li[' + str(i) + ']/a'). \
-                get_attribute('title')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i) + ",'" + word + "','国内热门点击','" + localtime + "')"
+            word = driver.find_element_by_xpath('//*[@id="civil-aside-tophit"]/div[2]/ol/li[' + str(i) + ']/a')
+            title = word.get_attribute('title')
+            link = word.get_attribute('href')
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i) + ",'" + title + "','国内热门点击','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 
         # 抓取10条国际热搜词(左右各5条)
         i = int(1)
         while i <= 5:
-            word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[1]/li[' + str(i) + ']/a'). \
-                get_attribute('title')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i) + ",'" + word + "','国际热搜词','" + localtime + "')"
+            word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[1]/li[' + str(i) + ']/a')
+            title = word.get_attribute('title')
+            link = word.get_attribute('href')
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i) + ",'" + title + "','国际热搜词','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 
         i = int(1)
         while i <= 5:
-            word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[2]/li[' + str(i) + ']/a'). \
-                get_attribute('title')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i + 5) + ",'" + word + "','国际热搜词','" + localtime + "')"
+            word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[2]/li[' + str(i) + ']/a')
+            title = word.get_attribute('title')
+            link = word.get_attribute('href')
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i + 5) + ",'" + title + "','国际热搜词','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 
         # 抓取5条（军事）热门点击
         i = int(1)
         while i <= 5:
-            word = driver.find_element_by_xpath('//*[@id="mil-aside-video"]/div[2]/ol/li[' + str(i) + ']/a'). \
-                get_attribute('title')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i) + ",'" + word + "','军事热门点击','" + localtime + "')"
+            word = driver.find_element_by_xpath('//*[@id="mil-aside-video"]/div[2]/ol/li[' + str(i) + ']/a')
+            title = word.get_attribute('title')
+            link = word.get_attribute('href')
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i) + ",'" + title + "','军事热门点击','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 

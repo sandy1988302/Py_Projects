@@ -27,8 +27,9 @@ def exp_db(db, localtime, webdriver_path, options):
         while i <= b:
             word = driver.find_element_by_xpath(
                 '//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) + ']/div[2]/a').get_attribute('text')
-            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (" \
-                  + str(i) + ",'" + word + "','百度热搜','" + localtime + "')"
+            link = "https://www.baidu.com/s?wd=" + word
+            sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
+                  + str(i) + ",'" + word + "','百度热搜','" + localtime + "','" + link + "')"
             cursor.execute(sql)
             i += 1
 

@@ -12,12 +12,12 @@ if __name__ == '__main__':
         now_time = now.strftime('%Y-%m-%d %H:%M:%S')
         print(now_time)
 
-        sql = "INSERT INTO BAIDU_NEWS(NEW_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES " \
+        sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES " \
               "(1,'习近平：早日建成高水平亚太自由贸易区','新闻热搜词','"+now_time+"')"
         cursor.execute(sql)
 
         '''
-        sql = "INSERT INTO BAIDU_NEWS (NEW_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (%s,%s,%s,%s)"
+        sql = "INSERT INTO BAIDU_NEWS (NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME) VALUES (%s,%s,%s,%s)"
         val = [
             ('2', '构建中拉命运共同体 习主席这样领航前行', '新闻热搜词', now_time),
             ('3', '“矿都洼地”崛起“产业高地”——郴州资源型产业转型..', '国内热门点击', now_time),
