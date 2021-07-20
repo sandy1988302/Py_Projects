@@ -1,35 +1,26 @@
 import datetime
 
 
-def get_date_list(begin_date, end_date):
-    """
-    获取日期列表
-    :param begin_date: 开始日期
-    :param end_date: 结束日期
-    :return: 开始日期和结束日期之间的日期列表
-    """
-    start = datetime.datetime.strptime(begin_date, "%Y%m%d")
-    end = datetime.datetime.strptime(end_date, "%Y%m%d")
-
-    data_list = []
-    for d in gen_dates(start, (end - start).days):
-        data_list.append(d)
-    return data_list
-
-
 def gen_dates(b_date, days):
-    d = datetime.timedelta(days=1)
+    delta = datetime.timedelta(days=1)
     for i in range(days):
-        yield b_date + d * i
+        print("gen_dates:" + str(b_date + delta * i))
+        return b_date + delta * i
+# yield
 
 
-beginDate = input('请输入开始日期:')
-endDate = input('请输入结束日期:')
-data = get_date_list(beginDate, endDate)
-
-for da in data:
+d = 0
+start = datetime.datetime.strptime('20201230', "%Y%m%d")
+end = datetime.datetime.strptime('20210102', "%Y%m%d")
+print("起始日期相差" + str((end - start).days) + "天")
+data_list = []
+for day in gen_dates(start, (end - start).days):
+    data_list.append(day)
+    print("增加1天，现有" + str(len(data_list)) + "天")
+print("获得了data_list[]")
+for da in data_list:
     year = str(da.year)
     month = str(da.month) if da.month >= 10 else '0' + str(da.month)
-    da = str(da.day) if da.day >= 10 else '0' + str(da.day)
-
-    print("爬取完成：" + year + month + da)
+    day = str(da.day) if da.day >= 10 else '0' + str(da.day)
+    d = d + 1
+    print(year + month + day + "爬取完成，已爬取" + str(d) + "天")

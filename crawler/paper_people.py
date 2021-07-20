@@ -3,6 +3,7 @@ import bs4
 import os
 import datetime
 import time
+from tools import get_days
 
 
 def fetchUrl(url):
@@ -124,28 +125,6 @@ def download_rmrb(y, m, d, download_dir):
             saveFile(content, path, file_name)
 
 
-def gen_dates(b_date, days):
-    d = datetime.timedelta(days=1)
-    for i in range(days):
-        yield b_date + d * i
-
-
-def get_date_list(begin_date, end_date):
-    """
-    获取日期列表
-    :param begin_date: 开始日期
-    :param end_date: 结束日期
-    :return: 开始日期和结束日期之间的日期列表
-    """
-    start = datetime.datetime.strptime(begin_date, "%Y%m%d")
-    end = datetime.datetime.strptime(end_date, "%Y%m%d")
-
-    data_list = []
-    for d in gen_dates(start, (end - start).days):
-        data_list.append(d)
-    return data_list
-
-
 if __name__ == '__main__':
     '''
     主函数：程序入口
@@ -153,7 +132,7 @@ if __name__ == '__main__':
     # 输入起止日期，爬取之间的新闻
     beginDate = input('请输入开始日期:')
     endDate = input('请输入结束日期:')
-    data = get_date_list(beginDate, endDate)
+    data = get_days.get_date_list(beginDate, endDate)
 
     for da in data:
         year = str(da.year)
