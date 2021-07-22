@@ -1,9 +1,9 @@
 # noinspection PyBroadException
 def get_element_exist(dr, element_xpath):
     """
-    功能：尝试寻找元素，如若没有找到则会抛出异常
-    参数：打开目标网页的webdriver.Chrome
-    返回：true为在网页中元素存在，false为不存在
+    :param dr: 打开目标网页的webdriver.Chrome
+    :param element_xpath: 元素xpath位置
+    :return: 在网页中元素存在
     """
     element_exist = True
     try:

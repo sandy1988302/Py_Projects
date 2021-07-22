@@ -12,12 +12,16 @@ req.encoding = req.apparent_encoding
 
 soup = bs4.BeautifulSoup(req.text, 'html.parser')
 ips = soup.findAll('tr')
-# f = open("./proxy.txt", "w")
+f = open("./proxy.txt", "w")
 
-
+i = set()
+a = 0
 for x in range(1, len(ips)):
     ip = ips[x]
     tds = ip.findAll("td")
     ip_temp = tds[0].contents[0] + "\t" + tds[1].contents[0] + "\n"
-    print(ip_temp)
-    #f.write(ip_temp)
+    ip_value = (tds[0].contents[0], tds[1].contents[0])
+    i.add(ip_value)
+    if a < len(i):
+        a = a + 1
+        f.write(ip_temp)

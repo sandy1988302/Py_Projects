@@ -3,8 +3,7 @@ import pymysql
 
 class DB:
     """
-    功能：建立mysql连接，结合with实现自动close连接
-    参数：host,port,database,user,password,charset
+    建立mysql连接，结合with实现自动close连接
     """
     def __init__(self, host='localhost', port=3306, database='', user='root', password='root', charset='utf8'):
         # 建立连接

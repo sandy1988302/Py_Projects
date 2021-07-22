@@ -3,7 +3,6 @@ import datetime
 
 def get_date_list(begin_date, end_date):
     """
-    获取日期列表
     :param begin_date: 开始日期
     :param end_date: 结束日期
     :return: 开始日期和结束日期之间的日期列表
