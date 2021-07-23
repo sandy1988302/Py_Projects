@@ -1,8 +1,9 @@
 import requests
 
 
-def fetch_url(url):
+def fetch_url(url, params=None):
     """
+    :param params: 目标传参
     :param url: 目标网页的url
     :return:  目标网页的html内容
     """
@@ -12,7 +13,7 @@ def fetch_url(url):
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/91.0.4472.124 Safari/537.36',
     }
-    r = requests.get(url, headers=headers)
+    r = requests.get(url, headers=headers, params=params)
     r.raise_for_status()
     r.encoding = r.apparent_encoding
     return r.text

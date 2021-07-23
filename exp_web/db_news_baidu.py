@@ -43,7 +43,7 @@ def exp_db(db, localtime, webdriver_path, options):
         while i <= 5:
             word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[1]/li[' + str(i) + ']/a')
             title = word.get_attribute('title')
-            link = word.get_attribute('href')
+            link = "http://news.baidu.com/ns?cl=2&ct=9&rn=20&sp=hotquery&word=" + title
             sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
                   + str(i) + ",'" + title + "','国际热搜词','" + localtime + "','" + link + "')"
             cursor.execute(sql)
@@ -53,7 +53,7 @@ def exp_db(db, localtime, webdriver_path, options):
         while i <= 5:
             word = driver.find_element_by_xpath('//*[@id="internal-hotword"]/div[2]/ol[2]/li[' + str(i) + ']/a')
             title = word.get_attribute('title')
-            link = word.get_attribute('href')
+            link = "http://news.baidu.com/ns?cl=2&ct=9&rn=20&sp=hotquery&word=" + title
             sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
                   + str(i + 5) + ",'" + title + "','国际热搜词','" + localtime + "','" + link + "')"
             cursor.execute(sql)
