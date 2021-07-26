@@ -11,6 +11,7 @@ def exp_db(db, localtime, webdriver_path, options):
     driver.get("https://top.baidu.com/board?tab=realtime")
     driver.maximize_window()
     sleep(3)
+
     # 获取当前页面存在多少条(条数<=30)热搜新闻
     a = b = 0
     while a <= 30:
@@ -26,7 +27,8 @@ def exp_db(db, localtime, webdriver_path, options):
         i = int(1)
         while i <= b:
             word = driver.find_element_by_xpath(
-                '//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) + ']/div[2]/a').get_attribute('text')
+                '//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) + ']/div[2]/a/div[1]')
+            word = word.text
             link = "https://www.baidu.com/s?wd=" + word
             sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
                   + str(i) + ",'" + word + "','百度热搜','" + localtime + "','" + link + "')"
