@@ -17,8 +17,7 @@ file = "D:\Py_Projects\AUTO_CASE\\baidu_news.txt"
 db = ("localhost", "root", "1qaz@WSX", "sakila", 3306)
 
 if __name__ == '__main__':
-    # option = input('f：爬取数据导出到文件\n d：爬取数据保存在数据库\n 请输入【f/d】：')
-    option = 'd'
+    option = input('f：爬取数据导出到文件\n d：爬取数据保存在数据库\n 请输入【f/d】：')
     now = datetime.now()
     localtime = now.strftime('%Y-%m-%d %H:%M:%S')
     print("启动爬取时间:", localtime)
@@ -29,7 +28,7 @@ if __name__ == '__main__':
         top_baidu_realtime.exp_print(file, webdriver_path, options, "a")
     elif option in ['d', 'D']:
         print("爬取数据保存在数据库")
-        # db_news_baidu.exp_db(db, localtime, webdriver_path, options)
+        db_news_baidu.exp_db(db, localtime, webdriver_path, options)
         db_top_baidu_realtime.exp_db(db, localtime, webdriver_path, options)
     else:
         print("没有执行有效操作。")
