@@ -17,7 +17,7 @@ file = "D:\Py_Projects\AUTO_CASE\\baidu_news.txt"
 db = ("localhost", "root", "1qaz@WSX", "sakila", 3306)
 
 if __name__ == '__main__':
-    option = input('f：爬取数据导出到文件\n d：爬取数据保存在数据库\n 请输入【f/d】：')
+    option = input('f：爬取数据导出到文件\nd：爬取数据保存在数据库\n请输入【f/d】：')
     now = datetime.now()
     localtime = now.strftime('%Y-%m-%d %H:%M:%S')
     print("启动爬取时间:", localtime)
