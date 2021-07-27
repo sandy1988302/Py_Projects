@@ -1,11 +1,12 @@
 import pymysql
 
 # 打开数据库连接
-db = pymysql.connect(host="localhost", user="root", password="1qaz@WSX", database="mysql")
+db = pymysql.connect(host="localhost", user="root", password="1qaz@WSX", database="sakila")
 # 使用cursor()方法获取操作游标
 cursor = db.cursor()
 # SQL 删除语句
-sql = "DELETE FROM EMPLOYEE WHERE AGE > %s" % 20
+# sql = "DELETE FROM BAIDU_NEWS WHERE NEWS_RANK > %s" % 0
+sql = "TRUNCATE BAIDU_NEWS"
 try:
     # 执行SQL语句
     cursor.execute(sql)

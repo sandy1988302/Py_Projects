@@ -29,7 +29,11 @@ def exp_db(db, localtime, webdriver_path, options):
             word = driver.find_element_by_xpath(
                 '//*[@id="sanRoot"]/main/div[2]/div/div[2]/div[' + str(i) + ']/div[2]/a/div[1]')
             word = word.text
-            link = "https://www.baidu.com/s?wd=" + word
+            if word[0] == '#' and word[-1] == '#':  # 热搜词加上了话题标签需要转义
+                word = word.strip('#')
+                link = "https://www.baidu.com/s?wd=%23" + word + "%23"
+            else:
+                link = "https://www.baidu.com/s?wd=" + word
             sql = "INSERT INTO BAIDU_NEWS(NEWS_RANK,TITLE, CATEGORY,CRAWLING_TIME,LINK) VALUES (" \
                   + str(i) + ",'" + word + "','百度热搜','" + localtime + "','" + link + "')"
             cursor.execute(sql)
