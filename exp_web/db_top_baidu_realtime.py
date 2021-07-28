@@ -23,7 +23,7 @@ def exp_db(db, localtime, webdriver_path, options):
             a = a + 31
 
     with DB(host=db[0], user=db[1], password=db[2], database=db[3], port=db[4]) as cursor:
-        # 抓取10条新闻热搜词
+        # 抓取所有新闻热搜词
         i = int(1)
         while i <= b:
             word = driver.find_element_by_xpath(
