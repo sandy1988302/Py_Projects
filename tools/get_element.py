@@ -24,7 +24,9 @@ def check_element(bsobj, label, attr, attr_value):
     """
     element_exist = True
     try:
-        bsobj.find(label, attrs={attr: attr_value})
+        a = bsobj.find(label, attrs={attr: attr_value})
+        if a is None:
+            element_exist = False
     except:
         element_exist = False
     return element_exist
