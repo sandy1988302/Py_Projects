@@ -16,11 +16,11 @@ def get_element_exist(dr, element_xpath):
 
 def check_element(bsobj, label, attr, attr_value):
     """
-    :param bsobj: 打开目标网页的webdriver.Chrome
-    :param label: 元素xpath位置
-    :param attr: 元素xpath位置
-    :param attr_value: 元素xpath位置
-    :return: 在网页中元素存在
+    :param bsobj: 打开目标网页的BeautifulSoup
+    :param label: 查询的元素类型
+    :param attr: 元素特征属性
+    :param attr_value: 属性值
+    :return: 检查在网页是否能找到元素
     """
     element_exist = True
     try:

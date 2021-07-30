@@ -1,5 +1,4 @@
 import bs4
-import time
 from tools import get_html
 
 
@@ -7,15 +6,18 @@ def exp_data(news_rank, titles, category, link):
     url = "https://top.baidu.com/board?tab=realtime"
     html = get_html.fetch_url(url)
     bsobj = bs4.BeautifulSoup(html, 'html.parser')
-
-    index_num = bsobj.find('ul', attrs={'class': 'index_1Ew5p c-index-bg'+str(30 - a)})
-
-    # 获取当前页面存在多少条(条数<=30)热搜新闻
-    a = b = 0
-    while a <= 30:
-        xpath1 = "//div[@class=\"index_1Ew5p c-index-bg" + str(30 - a) + "\"]"
-        if not get_element.get_element_exist(driver, xpath1):
-            a = a + 1
+    hotwords_list = bsobj.find_all('div', attrs={'class': 'c-single-text-ellipsis'})
+    i = 1
+    for hotword in hotwords_list:
+        news_rank.append(i)
+        category.append('百度热搜')
+        title = hotword.text.strip()
+        titles.append(title)
+        if title[0] == '#' and title[-1] == '#':  # 热搜词加上了话题标签需要转义
+            title = title.strip('#')
+            link.append("https://www.baidu.com/s?wd=%23" + title + "%23")
         else:
-            b = int(30 - a)
-            a = a + 31
+            link.append("https://www.baidu.com/s?wd=" + title)
+        i += 1
+    dicts = {'NEWS_RANK': news_rank, 'TITLE': titles, 'CATEGORY': category, 'LINK': link}
+    return dicts
