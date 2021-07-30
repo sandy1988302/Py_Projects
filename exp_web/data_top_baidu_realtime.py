@@ -8,6 +8,8 @@ def exp_data(news_rank, titles, category, link):
     html = get_html.fetch_url(url)
     bsobj = bs4.BeautifulSoup(html, 'html.parser')
 
+    index_num = bsobj.find('ul', attrs={'class': 'index_1Ew5p c-index-bg'+str(30 - a)})
+
     # 获取当前页面存在多少条(条数<=30)热搜新闻
     a = b = 0
     while a <= 30:
