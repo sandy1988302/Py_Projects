@@ -21,9 +21,9 @@ DB = ("localhost", "root", "1qaz@WSX", "sakila", 3306)
 
 
 class MyThread(threading.Thread):
-    def __init__(self, threadID, name, time1):
+    def __init__(self, thread_id, name, time1):
         threading.Thread.__init__(self)
-        self.threadID = threadID
+        self.threadID = thread_id
         self.name = name
         self.time = time1
 
