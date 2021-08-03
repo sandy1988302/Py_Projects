@@ -3,6 +3,7 @@ from exp_web import db_news_baidu
 from exp_web import db_top_baidu_realtime
 from exp_web import data_news_baidu
 from exp_web import data_top_baidu_realtime
+from exp_web import pyh_news_baidu
 from datetime import datetime
 import pandas as pd
 import threading
@@ -15,7 +16,8 @@ options.add_argument('headless')
 # chrome 的 webdriver驱动位置
 WD_PATH = "C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe"
 # 预备存储的文件
-CSV = "D:\Py_Projects\AUTO_CASE\\csv_baidu.csv"
+CSV = "D:\\Py_Projects\\AUTO_CASE\\csv_baidu.csv"
+HTML = "D:\\Py_Projects\\AUTO_CASE\\baidu.html"
 # 数据库配置[ip,用户,密码,数据库,端口]
 DB = ("localhost", "root", "1qaz@WSX", "sakila", 3306)
 
@@ -46,6 +48,11 @@ class MyThread(threading.Thread):
             df = pd.DataFrame(data_top_baidu_realtime.exp_data(news_rank, titles, category, link))
             df.to_csv(CSV, encoding="utf_8_sig", index=False)
             print("%s: %s完成使用requests的爬取，结果保存在CSV文件" % (self.name, time.ctime(time.time())))
+        elif self.name == 'saveHTML_requests':
+            html = pyh_news_baidu.exp_data()
+            with open(HTML, "w", encoding="utf-8") as hotwords:
+                hotwords.write(html)
+                print("%s: %s完成使用requests的爬取，结果保存在HTML文件" % (self.name, time.ctime(time.time())))
         print("退出线程：" + self.name)
 
 
@@ -56,9 +63,12 @@ if __name__ == '__main__':
     # 创建新线程
     thread1 = MyThread(1, "saveDB_selenium", localtime)
     thread2 = MyThread(2, "saveCSV_requests", localtime)
+    thread3 = MyThread(3, "saveHTML_requests", localtime)
     # 开启新线程
     thread1.start()
     thread2.start()
+    thread3.start()
     thread1.join()
     thread2.join()
+    thread3.join()
     print("退出主线程")
