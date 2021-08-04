@@ -6,7 +6,8 @@ db = pymysql.connect(host="localhost", user="root", password="1qaz@WSX", databas
 cursor = db.cursor()
 # SQL 删除语句
 # sql = "DELETE FROM BAIDU_NEWS WHERE NEWS_RANK > %s" % 0
-sql = "TRUNCATE BAIDU_NEWS"
+# sql = "TRUNCATE BAIDU_NEWS"
+sql = "TRUNCATE ADMIN_DIVISIONS"
 try:
     # 执行SQL语句
     cursor.execute(sql)

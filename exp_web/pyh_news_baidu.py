@@ -13,6 +13,7 @@ def exp_data():
     i = 1
     page = PyH('百度热搜')
     page << h1('新闻热搜词', cl='center')
+    page << h4('爬取时间:'+time.ctime(time.time()), cl='center')
     mytab = page << table()
     for hotword in hotwords_list:
         tr1 = mytab << tr()
@@ -35,6 +36,7 @@ def exp_data():
         .find('ol').find_all('li')
     i = 1
     page << h1('国内热门点击', cl='center')
+    page << h4('爬取时间:' + time.ctime(time.time()), cl='center')
     mytab = page << table()
     for hotword in hotwords_list:
         tr1 = mytab << tr()
@@ -56,6 +58,7 @@ def exp_data():
         .find('ol').find_all('li')
     i = 1
     page << h1('国际热搜词', cl='center')
+    page << h4('爬取时间:' + time.ctime(time.time()), cl='center')
     mytab = page << table()
     for hotword in hotwords_list:
         tr1 = mytab << tr()
@@ -89,6 +92,7 @@ def exp_data():
         .find('ol').find_all('li')
     i = 1
     page << h1('军事热门点击', cl='center')
+    page << h4('爬取时间:' + time.ctime(time.time()), cl='center')
     mytab = page << table()
     for hotword in hotwords_list:
         tr1 = mytab << tr()
@@ -106,6 +110,7 @@ def exp_data():
     hotwords_list = bsobj.find_all('div', attrs={'class': 'c-single-text-ellipsis'})
     i = 1
     page << h1('百度热搜', cl='center')
+    page << h4('爬取时间:' + time.ctime(time.time()), cl='center')
     mytab = page << table()
     for hotword in hotwords_list:
         tr1 = mytab << tr()

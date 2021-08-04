@@ -6,11 +6,13 @@ db = pymysql.connect(host="localhost", user="root", password="1qaz@WSX", databas
 # 使用cursor()方法获取操作游标
 cursor = db.cursor()
 # SQL 更新语句
-sql = "CREATE TABLE BAIDU_NEWS(NEWS_RANK INT NOT NULL,TITLE VARCHAR(60) NOT NULL,CATEGORY VARCHAR(20) NOT NULL," \
-      "CRAWLING_TIME DATETIME NOT NULL,LINK VARCHAR(255)) "
+# sql = "CREATE TABLE BAIDU_NEWS(NEWS_RANK INT NOT NULL,TITLE VARCHAR(60) NOT NULL,CATEGORY VARCHAR(20) NOT NULL," \
+#       "CRAWLING_TIME DATETIME NOT NULL,LINK VARCHAR(255)) "
+
+sql = "CREATE TABLE ADMIN_DIVISIONS(CODE INT(6) NOT NULL,ADMIN_NAME VARCHAR(60) NOT NULL) "
 try:
     # 执行SQL语句
-    cursor.execute('DROP TABLE IF EXISTS BAIDU_NEWS')
+    cursor.execute('DROP TABLE IF EXISTS ADMIN_DIVISIONS')
     cursor.execute(sql)
 except:
     # 发生错误时回滚
