@@ -13,15 +13,33 @@ def exp_db(db):
     print('一共找到' + str(len(tr_list)) + '行数据')
     previous_code = ''
     with DB(host=db[0], user=db[1], password=db[2], database=db[3], port=db[4]) as cursor:
+        province_name = ''
+        city_name = ''
+        county_name = ''
         for tr in tr_list:
             td_list = tr.find_all('td')
-            # print(len(td_list))
             code = td_list[1].get_text()
             if code == '':  # 有的区划可能和上一个区划是同一个code，网页里显示空白
                 code = previous_code
-            # print('code:' + code)
-            admin_name = td_list[2].get_text().strip()
-            # print('admin_name:' + admin_name)
-            sql = "INSERT INTO ADMIN_DIVISIONS(CODE,ADMIN_NAME) VALUES (" + code + ",\'" + str(admin_name) + "\')"
+            province_code = code[:2]
+            city_code = code[2:4]
+            county_code = code[4:]
+            name = str(td_list[2].get_text())
+            if name[1].isspace():  # 以两个空格开始的名称是县级区划
+                province_name = province_name
+                city_name = city_name
+                county_name = name.strip()
+            elif name[0].isspace():  # 以一个空格开始的名称是市级区划
+                province_name = province_name
+                city_name = name.strip()
+                county_name = ''
+            else:  # 没有空格开始的名称是省级区划
+                province_name = name
+                city_name = ''
+                county_name = ''
+            sql = "INSERT INTO ADMIN_DIVISIONS(CODE,ADMIN_NAME,PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME," \
+                  "COUNTY_CODE,COUNTY_NAME) VALUES (\'" + code + "\',\'" + name.strip() + "\',\'" + province_code \
+                  + "\',\'" + province_name + "\',\'" + city_code + "\',\'" + city_name + "\',\'" + county_code \
+                  + "\',\'" + county_name + "\') "
             cursor.execute(sql)
             previous_code = code

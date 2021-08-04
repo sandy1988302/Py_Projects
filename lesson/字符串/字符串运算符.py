@@ -4,7 +4,7 @@ b = "Python"
 print("a + b 输出结果：", a + b)
 print("a * 2 输出结果：", a * 2)
 print("a[1] 输出结果：", a[1])
-print("a[1:4] 输出结果：", a[1:4])
+print("a[4:] 输出结果：", a[4:])
 
 if "H" in a:
     print("H 在变量 a 中")
