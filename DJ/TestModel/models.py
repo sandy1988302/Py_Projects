@@ -14,10 +14,16 @@ class Contact(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class Tag(models.Model):
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, )
     name = models.CharField(max_length=50)
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
