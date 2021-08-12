@@ -8,6 +8,8 @@ class TagInline(admin.TabularInline):
 
 # Register your models here.
 class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'age', 'email')  # list
+    search_fields = ('name',)
     inlines = [TagInline]  # Inline
     fieldsets = (
         ['Main', {

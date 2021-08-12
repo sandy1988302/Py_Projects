@@ -1,0 +1,12 @@
+#创建项目
+#django-admin startproject chn
+#启动服务器
+py manage.py runserver 0.0.0.0:8000
+#创建一个app
+#django-admin.py startapp app01
+# 创建表结构
+#py manage.py migrate
+#让Django知道我们在我们的模型有一些变更
+#py manage.py makemigrations app01
+# 创建表结构
+#py manage.py migrate app01

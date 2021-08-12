@@ -1,4 +1,3 @@
-from exp_web import pyh_news_baidu
+from datetime import timezone, datetime
 
-for i in range(0, 16):
-    print(i)
+print(datetime.now(""))
