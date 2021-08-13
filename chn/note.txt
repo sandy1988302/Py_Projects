@@ -3,7 +3,7 @@
 #启动服务器
 py manage.py runserver 0.0.0.0:8000
 #创建一个app
-#django-admin.py startapp app01
+#django-admin startapp app01
 # 创建表结构
 #py manage.py migrate
 #让Django知道我们在我们的模型有一些变更

@@ -1,7 +1,7 @@
 import bs4
 import time
 from tools import get_html
-import models
+from app01 import models
 
 
 def exp_data(localtime):
@@ -91,7 +91,7 @@ def exp_data(localtime):
             ti = title.strip('#')
             link = "https://www.baidu.com/s?wd=%23" + ti + "%23"
         else:
-            link = "https://www.baidu.com/s?wd=" + ti
+            link = "https://www.baidu.com/s?wd=" + title
         massage = models.BaiduNews(title=title, news_rank=i, category='百度热搜', crawling_time=localtime, link=link)
         massage.save()
         i += 1

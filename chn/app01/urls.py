@@ -3,5 +3,6 @@ from app01 import views
 
 
 urlpatterns = [
-    path('start/', views.start)
+    path('start/', views.start),
+    path('crawler/', views.crawler),
 ]

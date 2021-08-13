@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="/id/number/" method="post">
+        {% csrf_token %}
+        <input type="text" name="id_number">
+        <input type="submit" value="开始检查身份证号码信息">
+    </form>
+    <p>{{ rlt }}</p>
+    <form action="/id/admindivisions/" method="get">
+        <input type="submit" value="更新行政区划信息">
+    </form>
+</body>
+</html>
