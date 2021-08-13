@@ -1,6 +1,6 @@
 import sys
 from datetime import datetime
-from tools.get_connect import DB
+# noinspection PyUnresolvedReferences
 from app02 import models
 
 

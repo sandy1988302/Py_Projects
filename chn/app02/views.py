@@ -1,4 +1,5 @@
-from django.shortcuts import HttpResponse, render
+from django.shortcuts import render
+# noinspection PyUnresolvedReferences
 from app02 import check_id, get_ad
 
 
