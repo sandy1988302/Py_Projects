@@ -1,4 +1,5 @@
-from django.urls import path, re_path
+from django.urls import path
+# noinspection PyUnresolvedReferences
 from app01 import views
 
 

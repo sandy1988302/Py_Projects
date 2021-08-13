@@ -1,6 +1,7 @@
 import bs4
 import time
 from tools import get_html
+# noinspection PyUnresolvedReferences
 from app01 import models
 
 

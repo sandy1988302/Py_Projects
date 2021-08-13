@@ -1,4 +1,5 @@
 from django.contrib import admin
+# noinspection PyUnresolvedReferences
 from app01.models import BaiduNews
 
 

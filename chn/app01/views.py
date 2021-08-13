@@ -1,5 +1,6 @@
 from django.shortcuts import HttpResponse, render
 from datetime import datetime
+# noinspection PyUnresolvedReferences
 from app01 import get_news
 
 

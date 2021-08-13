@@ -1,5 +1,6 @@
 import bs4
 from tools import get_html
+# noinspection PyUnresolvedReferences
 from app02 import models
 
 
