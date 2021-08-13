@@ -1,5 +1,5 @@
 from django.shortcuts import HttpResponse, render
-from app02 import check_id
+from app02 import check_id, get_ad
 
 
 def input_id(request):
@@ -8,16 +8,16 @@ def input_id(request):
 
 def number(request):
     request.encoding = 'utf-8'
-    if 'id_number' in request.GET and request.GET['id_number']:
-        message = '你输入的身份证为: ' + request.GET['id_number']
-        check_id.check(request.GET['id_number'])
-        ctx = {'rlt': message}
+    print(request.POST['id_number'])
+    if request.POST['id_number']:
+        message = check_id.check(request.POST['id_number'])
     else:
         message = '你提交了空表单'
-        ctx = {'rlt': message}
+    ctx = {'rlt': message}
     return render(request, "id.html", ctx)
 
 
 def admindivisions(request):
     request.encoding = 'utf-8'
+    get_ad.exp_db()
     return render(request, 'id.html')

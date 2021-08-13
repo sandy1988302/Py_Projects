@@ -3,7 +3,8 @@ from tools import get_html
 from app02 import models
 
 
-def exp_db(db):
+def exp_db():
+    massage = models.AdminDivisions.objects.all().delete()
     # 2020年12月中华人民共和国县以上行政区划代码
     url = "http://www.mca.gov.cn/article/sj/xzqh/2020/20201201.html"
     # 参考 http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2020/index.html

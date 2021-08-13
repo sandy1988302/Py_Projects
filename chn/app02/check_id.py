@@ -1,10 +1,10 @@
 import sys
 from datetime import datetime
 from tools.get_connect import DB
+from app02 import models
 
 
 def check(id_number):
-    db = ("localhost", "root", "1qaz@WSX", "sakila", 3306)
     """
     根据〖中华人民共和国国家标准 GB 11643-1999〗中有关公民身份号码的规定，公民身份号码是特征组合码，由十七位数字本体码和一位数字校验码组成。
     排列顺序从左至右依次为：六位数字地址码，八位数字出生日期码，三位数字顺序码和一位数字校验码。 
@@ -12,6 +12,7 @@ def check(id_number):
     check_id = id_number
     if len(check_id) != 18:
         print('号码不是18位数字')
+        return '号码不是18位数字'
         sys.exit()
     """
     校验码（身份证最后一位）是根据前面十七位数字码，按照ISO 7064:1983.MOD 11-2校验码计算出来的检验码。 
@@ -34,22 +35,18 @@ def check(id_number):
     if str(check_code) == check_id[17]:
         print("第18位校验码(" + str(check_code) + ")符合规则")
     else:
-        print("第18位校验码(" + check_id[17] + ")不符合规则,应当为" + str(check_code))
+        return "第18位校验码(" + check_id[17] + ")不符合规则,应当为" + str(check_code)
         sys.exit()
     """
     地址码（身份证前六位）表示编码对象常住户口所在县(市、旗、区)的行政区划代码。
     """
     admin_code = check_id[:6]
-    with DB(host=db[0], user=db[1], password=db[2], database=db[3], port=db[4]) as cursor:
-        sql = "select ADMIN_NAME,PROVINCE_NAME,CITY_NAME,COUNTY_NAME from ADMIN_DIVISIONS where CODE='" + admin_code + "'"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        for row in results:
-            admin_name = row['ADMIN_NAME']
-            province_name = row['PROVINCE_NAME']
-            city_name = row['CITY_NAME']
-            county_name = row['COUNTY_NAME']
-            print("出生地为%s,省级行政区划：%s,地级行政区划：%s,县级行政区划：%s" % (admin_name, province_name, city_name, county_name))
+    ad = models.AdminDivisions.objects.get(code=admin_code)
+    admin_name = ad.admin_name
+    province_name = ad.province_name
+    city_name = ad.city_name
+    county_name = ad.county_name
+    print("出生地为%s,省级行政区划：%s,地级行政区划：%s,县级行政区划：%s" % (admin_name, province_name, city_name, county_name))
     """
     生日期码（身份证第七位到第十四位）表示编码对象出生的年、月、日，其中年份用四位数字表示，年、月、日之间不用分隔符。
     """
@@ -66,4 +63,6 @@ def check(id_number):
         sex = '男性'
     print("性别登记为%s" % sex)
 
-    return True
+    message = "输入的身份证为：%s,\n性别登记为%s,\n登记的出生日期为%s,\n出生地为%s,\n省级行政区划：%s,\n地级行政区划：%s,\n县级行政区划：%s" % (
+        check_id, sex, birthday, admin_name, province_name, city_name, county_name)
+    return message
