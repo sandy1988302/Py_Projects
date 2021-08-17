@@ -1,10 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # noinspection PyUnresolvedReferences
-from app02 import check_id, get_ad
+from app02 import check_id, get_ad, models
+# noinspection PyUnresolvedReferences
+from app02.id_form import AdminDivisionsForm
 
 
 def input_id(request):
-    return render(request, 'id.html')
+    if request.method == "GET":
+        form = AdminDivisionsForm()  # 初始化form对象
+        return render(request, "id.html", {"form": form})
+    else:
+        form = AdminDivisionsForm(request.POST)  # 将数据传给form对象
+        if form.is_valid():  # 进行校验
+            data = form.cleaned_data
+            request.encoding = 'utf-8'
+            print(request.POST['id_number'])
+            message = data['message']
+            return render(request, "id.html", {"form": form, 'rlt': message})
+        else:  # 校验失败
+            clear_errors = form.errors.get("__all__")  # 获取全局钩子错误信息
+            return render(request, "id.html", {"form": form, "clear_errors": clear_errors})
 
 
 def number(request):

@@ -5,7 +5,7 @@ from app01 import get_news, models
 # noinspection PyUnresolvedReferences
 from app01.My_forms import EmpForm
 from django.core.exceptions import ValidationError
-from django.db.models import Avg, Max, Min, Count, Sum
+from django.db.models import Avg, Max, Min, Count, Sum, F, Q
 
 
 def start(request):
@@ -22,7 +22,7 @@ def crawler(request):
 
 
 def add_book(request):
-    res = models.Publish.objects.values("name").annotate(in_price=Min("book__price"))
+    res = models.Book.objects.filter(Q(pub_date__year=2004) | Q(pub_date__year=1999), title__contains="菜")
     print(res)
     return HttpResponse(res)
 
@@ -37,7 +37,7 @@ def add_emp(request):
             data = form.cleaned_data
             data.pop("r_salary")
             models.Emp.objects.create(**data)
-            return redirect("/index/")
+            return redirect("/add_emp/")
         else:  # 校验失败
             clear_errors = form.errors.get("__all__")  # 获取全局钩子错误信息
             return render(request, "add_emp.html", {"form": form, "clear_errors": clear_errors})
