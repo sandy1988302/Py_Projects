@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(main);
+        function main() {
+            var province_name = $("#province_name")
+            sendProvinceAjax();
+            $province_name.change(provinceChange)
+        }
+        function sendProvinceAjax(){
+            $.get("/id/province"),function(date)
+            console.log(data);
+            $.each(data.d,function(idx,val){
+                var id=val[0];
+                var name=val[1];
+                var option="<option value="+id+">"+name+"</option>";
+                $province_name.append(option)
+            })
+
+        }
+    </script>
 </head>
 <body>
     <form action="/id/input/" method="post">
         {% csrf_token %}
-<!--        <input type="text" name="idnumber">-->
         <div>
         <label for="idnumber">身份证号码</label>
         {{ form.idnumber }} <span>{{ clear_errors.0 }}</span>
@@ -18,5 +37,17 @@
     <form action="/id/admindivisions/" method="get">
         <input type="submit" value="更新行政区划信息">
     </form>
+
+        <select name="province_name">
+            <option value="">--省级行政区划--</option>
+        </select>
+        <select name="city_name">
+            <option value="">--地级行政区划--</option>
+        </select>
+        <select name="county_name">
+            <option value="">--县级行政区划--</option>
+        </select>
+        <input type="submit" value="生成身份证号码">
+
 </body>
 </html>

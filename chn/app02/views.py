@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 # noinspection PyUnresolvedReferences
 from app02 import check_id, get_ad, models
@@ -37,3 +38,9 @@ def admindivisions(request):
     request.encoding = 'utf-8'
     get_ad.exp_db()
     return render(request, 'id.html')
+
+
+def province(request):
+    all_province = models.AdminDivisions.objects.filter(citycode='00').filter(countycode='00')
+    province_info_list = [(prov.province_code, prov.province_name) for prov in all_province]
+    return JsonResponse(province_info_list)
