@@ -7,10 +7,10 @@
 <body>
     <form action="/id/input/" method="post">
         {% csrf_token %}
-<!--        <input type="text" name="id_number">-->
+<!--        <input type="text" name="idnumber">-->
         <div>
-        <label for="id_number">身份证号码</label>
-        {{ form.id_number }} <span>{{ form.id_number.errors.0 }}{{ clear_errors.0 }}</span>
+        <label for="idnumber">身份证号码</label>
+        {{ form.idnumber }} <span>{{ clear_errors.0 }}</span>
         </div>
         <input type="submit" value="开始检查身份证号码信息">
     </form>

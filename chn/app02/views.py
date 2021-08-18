@@ -14,7 +14,7 @@ def input_id(request):
         if form.is_valid():  # 进行校验
             data = form.cleaned_data
             request.encoding = 'utf-8'
-            print(request.POST['id_number'])
+            print(request.POST['idnumber'])
             message = data['message']
             return render(request, "id.html", {"form": form, 'rlt': message})
         else:  # 校验失败
@@ -24,9 +24,9 @@ def input_id(request):
 
 def number(request):
     request.encoding = 'utf-8'
-    print(request.POST['id_number'])
-    if request.POST['id_number']:
-        message = check_id.check(request.POST['id_number'])
+    print(request.POST['idnumber'])
+    if request.POST['idnumber']:
+        message = check_id.check(request.POST['idnumber'])
     else:
         message = '你提交了空表单'
     ctx = {'rlt': message}

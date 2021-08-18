@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 # noinspection PyUnresolvedReferences
 from app02 import models
 from datetime import datetime
+import re
 
 
 class AdminDivisionsForm(forms.Form):
@@ -10,27 +11,20 @@ class AdminDivisionsForm(forms.Form):
     根据〖中华人民共和国国家标准 GB 11643-1999〗中有关公民身份号码的规定，公民身份号码是特征组合码，由十七位数字本体码和一位数字校验码组成。
     排列顺序从左至右依次为：六位数字地址码，八位数字出生日期码，三位数字顺序码和一位数字校验码。
     """
-    id_number = forms.CharField(max_length=18, min_length=15, label="身份证号码",
-                                error_messages={"required": "请输入有效的身份证号码",
-                                                "min_length": "请输入18位数的身份证号码",
-                                                "max_length": "请输入18位数的身份证号码"})
+    idnumber = forms.CharField(max_length=18, min_length=18, label="身份证号码",
+                               error_messages={"required": "请输入有效的身份证号码",
+                                               "min_length": "请输入18位数的身份证号码",
+                                               "max_length": "请输入18位数的身份证号码"})
 
-    def clean_id_number(self):  # 局部钩子
-        check_id = self.cleaned_data.get("id_number")
-        if check_id.isdigit():
-            print("都是数字" + check_id)
-            return check_id
-        elif check_id[17] == 'X' and check_id[:17].isdigit():
-            print("最后一位是X，前17位是数字"+check_id)
-            return check_id
-        else:
-            raise ValidationError("身份证为十七位数字本体码和一位数字校验码（最后一位为数字或者X）")
+    # def clean_idnumber(self):  # 局部钩子
+    #     check_id = self.cleaned_data.get("idnumber")
+    #     return check_id
 
     def clean(self):  # 全局钩子
-        check_id = self.cleaned_data.get("id_number")
-        print(check_id)
-        if len(check_id) != 18:
-            raise ValidationError("请输入18位的身份证号码")
+        check_id = self.cleaned_data.get("idnumber")
+        if re.match('\d{17}[0-9,X]', check_id) is None:
+            print("身份证为十七位数字本体码和一位数字校验码（最后一位为数字或者X）")
+            raise ValidationError("身份证为十七位数字本体码和一位数字校验码（最后一位为数字或者X）")
 
         """
         地址码（身份证前六位）表示编码对象常住户口所在县(市、旗、区)的行政区划代码。
@@ -38,7 +32,7 @@ class AdminDivisionsForm(forms.Form):
         admin_code = check_id[:6]
         try:
             ad = models.AdminDivisions.objects.get(code=admin_code)
-        except:
+        except models.AdminDivisions.DoesNotExist:
             raise ValidationError("身份证前6位不是有效的行政区划代码")
         admin_name = ad.admin_name
         province_name = ad.province_name
