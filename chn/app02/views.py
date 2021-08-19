@@ -41,6 +41,22 @@ def admindivisions(request):
 
 
 def province(request):
-    all_province = models.AdminDivisions.objects.filter(citycode='00').filter(countycode='00')
+    request.encoding = 'utf-8'
+    all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00')
     province_info_list = [(prov.province_code, prov.province_name) for prov in all_province]
-    return JsonResponse(province_info_list)
+    return JsonResponse(province_info_list, safe=False)
+
+
+def get_city(request):
+    request.encoding = 'utf-8'
+    if request.method == "GET":
+        province_name = request.GET.get('province')
+        if province_name:
+            city_list = list(models.AdminDivisions.objects.filter(province_name=province_name).values("city_name")).distinct()
+            return JsonResponse(city_list, safe=False)
+
+
+def get_id(request):
+    request.encoding = 'utf-8'
+    all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00').values("province_name")
+    return render(request, "get_id.html", {"province_info_list": all_province})

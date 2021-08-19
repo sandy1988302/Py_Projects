@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成身份证号码</title>
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script language="JavaScript">
+        $("province").change(function(){
+            var province=$(this).val();
+            {#alert("welcome");#}
+            $.ajax({
+                url:'/id/get_city/',
+                date:{"province":$(this).val()},
+                type:'GET',
+                dataType:'json',
+                success:function(data){
+                    var content='';
+                    $.echo(data,function(i,item){
+                        content+='<option value='+item.city_name+'>'+item.city_name+'<option>'
+                    });
+                    $('#city').html(content)
+                },
+            });
+        });
+    </script>
+</head>
+<body>
+    <form>
+        {% csrf_token %}
+        <select name="province" id="province">
+            <option value="省级行政区划">--省级行政区划--</option>
+            {% for prov in province_info_list %}
+            <option value={{prov.province_name}}>{{prov.province_name}}</option>
+            {% endfor %}
+        </select>
+        <select name="city" id="city">
+            <option value="地级行政区划">--地级行政区划--</option>
+        </select>
+        <select name="county" id="county">
+            <option value="县级行政区划">--县级行政区划--</option>
+        </select>
+        <input type="submit" value="生成身份证号码">
+    </form>
+</body>
+</html>
