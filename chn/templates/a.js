@@ -16,20 +16,21 @@ $(main);
             })
         };
 
+
         $("province").change(function(){
             var province=$(this).val();
-            {#alert("welcome");#}
-            $.ajax({
-                url:'/id/get_city/',
-                date:{"province":$(this).val()},
-                type:'GET',
-                dataType:'json',
-                success:function(data){
-                    var content='';
-                    $.echo(data,function(i,item){
-                        content+='<option value='+item.city_name+'>'+item.city_name+'<option>'
-                    });
-                    $('#city').html(content)
-                },
-            });
+            alert("操作省份变动");
+//            $.ajax({
+//                url:'/id/get_city/',
+//                date:{"province":$(this).val()},
+//                type:'GET',
+//                dataType:'json',
+//                success:function(data){
+//                    var content='';
+//                    $.echo(data,function(i,item){
+//                        content+='<option value='+item.city_name+'>'+item.city_name+'<option>'
+//                    });
+//                    $('#city').html(content)
+//                },
+//            });
         });

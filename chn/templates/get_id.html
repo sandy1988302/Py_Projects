@@ -4,28 +4,15 @@
     <meta charset="UTF-8">
     <title>生成身份证号码</title>
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script language="JavaScript">
-        $("province").change(function(){
+    <script type="text/javascript" language="JavaScript">
+        $("#city").change(function(){
             var province=$(this).val();
-            {#alert("welcome");#}
-            $.ajax({
-                url:'/id/get_city/',
-                date:{"province":$(this).val()},
-                type:'GET',
-                dataType:'json',
-                success:function(data){
-                    var content='';
-                    $.echo(data,function(i,item){
-                        content+='<option value='+item.city_name+'>'+item.city_name+'<option>'
-                    });
-                    $('#city').html(content)
-                },
-            });
+            alert("操作省份变动");
         });
     </script>
 </head>
 <body>
-    <form>
+    <form enctype="multipart/form-data" action="/id/get_id/">
         {% csrf_token %}
         <select name="province" id="province">
             <option value="省级行政区划">--省级行政区划--</option>
@@ -35,6 +22,8 @@
         </select>
         <select name="city" id="city">
             <option value="地级行政区划">--地级行政区划--</option>
+            <option value="1">--A--</option>
+            <option value="2">--B--</option>
         </select>
         <select name="county" id="county">
             <option value="县级行政区划">--县级行政区划--</option>
