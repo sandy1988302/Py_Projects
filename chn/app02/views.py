@@ -56,7 +56,7 @@ def get_city(request):
         print("GET，获取现在选择的省份:"+str(province_name))
         if province_name:
             data = list(
-                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name"))
+                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name").distinct())
             return JsonResponse(data, safe=False)
 
 
