@@ -36,7 +36,7 @@
                     success: function (data) {
                         var content='';
                         $.each(data, function(i, item){
-                            content+='<option value='+item.city+'>'+item.city+'</option>'
+                            content+='<option value='+item.city_name+'>'+item.city_name+'</option>'
                         });
                         $('#city').html(content)
                     },

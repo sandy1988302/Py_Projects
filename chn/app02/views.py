@@ -52,11 +52,11 @@ def get_city(request):
     print("开始获取地级市列表")
     request.encoding = 'utf-8'
     if request.method == "GET":
-        print("GET，获取现在选择的省份")
         province_name = request.GET.get('province')
+        print("GET，获取现在选择的省份:"+str(province_name))
         if province_name:
             data = list(
-                models.AdminDivisions.objects.filter(province_name=province_name).values("city_code"))
+                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name"))
             return JsonResponse(data, safe=False)
 
 
