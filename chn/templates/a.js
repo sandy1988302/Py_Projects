@@ -34,3 +34,14 @@ $(main);
 //                },
 //            });
         });
+        $("#city").change(function(){
+            var province=$(this).val();
+            alert("操作省份变动");
+        });
+        $(main);
+        function main() {
+            alert(111);
+            $("province").change(function(){
+            alert("值为: " + $("#province").val());
+            });
+        }

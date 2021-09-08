@@ -41,6 +41,7 @@ def admindivisions(request):
 
 
 # def province(request):
+#     print("开始获取province_code与province_name")
 #     request.encoding = 'utf-8'
 #     all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00')
 #     province_info_list = [(prov.province_code, prov.province_name) for prov in all_province]
@@ -51,10 +52,11 @@ def get_city(request):
     print("开始获取地级市列表")
     request.encoding = 'utf-8'
     if request.method == "GET":
+        print("GET，获取现在选择的省份")
         province_name = request.GET.get('province')
         if province_name:
             data = list(
-                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name").distinct())
+                models.AdminDivisions.objects.filter(province_name=province_name).values("city_code"))
             return JsonResponse(data, safe=False)
 
 
@@ -65,5 +67,5 @@ def get_id(request):
     else:
         print("开始获取省份列表")
         all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00').values(
-            "province_name")
+            "province_name").distinct()
         return render(request, "get_id.html", {"province_info_list": all_province})

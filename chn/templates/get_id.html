@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <title>生成身份证号码</title>
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" language="JavaScript">
-        $("#city").change(function(){
-            var province=$(this).val();
-            alert("操作省份变动");
-        });
-    </script>
+    {% load static %}
+    <script type="text/javascript" charset="utf-8" src="{% static "js/build.js" %}"></script>
+    <script type="text/javascript" language="JavaScript">main();</script>
 </head>
 <body>
-    <form enctype="multipart/form-data" action="/id/get_id/">
+    <form enctype="multipart/form-data" action="/id/get/" method="post">
         {% csrf_token %}
         <select name="province" id="province">
             <option value="省级行政区划">--省级行政区划--</option>
@@ -22,13 +19,43 @@
         </select>
         <select name="city" id="city">
             <option value="地级行政区划">--地级行政区划--</option>
-            <option value="1">--A--</option>
-            <option value="2">--B--</option>
         </select>
         <select name="county" id="county">
             <option value="县级行政区划">--县级行政区划--</option>
         </select>
-        <input type="submit" value="生成身份证号码">
+        <input type="submit"  value="生成身份证号码">
+        <script type="text/javascript" language="JavaScript">
+            $("#province").change(function(){
+                var province = $(this).val();
+                {#alert("welcome");#}
+                $.ajax({
+                    url: '/id/get_city/',
+                    data:{"province":$(this).val()},
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        var content='';
+                        $.each(data, function(i, item){
+                            content+='<option value='+item.city+'>'+item.city+'</option>'
+                        });
+                        $('#city').html(content)
+                    },
+                });
+            });
+        </script>
     </form>
+
+<!--    <select name="province" id="province">-->
+<!--        <option value="省级行政区划">&#45;&#45;省级行政区划&#45;&#45;</option>-->
+<!--    </select>-->
+<!--    <select name="city" id="city">-->
+<!--        <option value="地级行政区划">&#45;&#45;地级行政区划&#45;&#45;</option>-->
+<!--    </select>-->
+<!--    <select name="county" id="county">-->
+<!--        <option value="县级行政区划">&#45;&#45;县级行政区划&#45;&#45;</option>-->
+<!--    </select>-->
+<!--    <input type="submit"  value="生成身份证号码">-->
+
+    <button>构建</button>
 </body>
 </html>
