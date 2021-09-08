@@ -40,26 +40,6 @@ def admindivisions(request):
     return render(request, 'id.html')
 
 
-# def province(request):
-#     print("开始获取province_code与province_name")
-#     request.encoding = 'utf-8'
-#     all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00')
-#     province_info_list = [(prov.province_code, prov.province_name) for prov in all_province]
-#     return JsonResponse(province_info_list, safe=False)
-
-
-def get_city(request):
-    print("开始获取地级市列表")
-    request.encoding = 'utf-8'
-    if request.method == "GET":
-        province_name = request.GET.get('province')
-        print("GET，获取现在选择的省份:"+str(province_name))
-        if province_name:
-            data = list(
-                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name").distinct())
-            return JsonResponse(data, safe=False)
-
-
 def get_id(request):
     request.encoding = 'utf-8'
     if request.method == "POST":
@@ -69,3 +49,38 @@ def get_id(request):
         all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00').values(
             "province_name").distinct()
         return render(request, "get_id.html", {"province_info_list": all_province})
+
+
+def get_city(request):
+    print("开始获取地级市列表")
+    request.encoding = 'utf-8'
+    if request.method == "GET":
+        province_name = request.GET.get('province')
+        print("GET，获取现在选择的省级行政区:" + str(province_name))
+        if province_name:
+            data = list(
+                models.AdminDivisions.objects.filter(province_name=province_name).values("city_name").distinct())
+            print(str(data))
+            # city_name为空时（直辖市），设置city_name和province_name 一致
+            if data[0]["city_name"] == '':
+                data.append({'city_name': str(province_name)})
+                print(str(data))
+    return JsonResponse(data, safe=False)
+
+
+def get_county(request):
+    print("开始获取县级市列表")
+    request.encoding = 'utf-8'
+    if request.method == "GET":
+        city_name = request.GET.get('city')
+        print("GET，获取现在选择的市级行政区:" + str(city_name))
+        if city_name:
+            data = list(
+                models.AdminDivisions.objects.filter(city_name=city_name).values("county_name").distinct())
+            print(str(data))
+            # city_name为空时（直辖市），使用province_name做查询条件
+            if not data:
+                data = list(
+                    models.AdminDivisions.objects.filter(province_name=city_name).values("county_name").distinct())
+                print(str(data))
+    return JsonResponse(data, safe=False)

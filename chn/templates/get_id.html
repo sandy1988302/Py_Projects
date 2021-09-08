@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <title>生成身份证号码</title>
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {% load static %}
-    <script type="text/javascript" charset="utf-8" src="{% static "js/build.js" %}"></script>
-    <script type="text/javascript" language="JavaScript">main();</script>
+
+<!--    <script type="text/javascript" language="JavaScript">main();</script>-->
 </head>
 <body>
     <form enctype="multipart/form-data" action="/id/get/" method="post">
@@ -24,25 +23,44 @@
             <option value="县级行政区划">--县级行政区划--</option>
         </select>
         <input type="submit"  value="生成身份证号码">
-        <script type="text/javascript" language="JavaScript">
-            $("#province").change(function(){
-                var province = $(this).val();
-                {#alert("welcome");#}
-                $.ajax({
-                    url: '/id/get_city/',
-                    data:{"province":$(this).val()},
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function (data) {
-                        var content='';
-                        $.each(data, function(i, item){
-                            content+='<option value='+item.city_name+'>'+item.city_name+'</option>'
-                        });
-                        $('#city').html(content)
-                    },
-                });
-            });
-        </script>
+        {% load static %}
+        <script type="text/javascript" language="JavaScript" charset="utf-8" src="{% static "js/build.js" %}"></script>
+<!--        <script type="text/javascript" language="JavaScript">-->
+<!--            $("#province").change(function(){-->
+<!--                var province = $(this).val();-->
+<!--                alert("province改变了");-->
+<!--                $.ajax({-->
+<!--                    url: '/id/get_city/',-->
+<!--                    data:{"province":$(this).val()},-->
+<!--                    type: 'GET',-->
+<!--                    dataType: 'json',-->
+<!--                    success: function (data) {-->
+<!--                        var content='';-->
+<!--                        $.each(data, function(i, item){-->
+<!--                            content+='<option value='+item.city_name+'>'+item.city_name+'</option>'-->
+<!--                        });-->
+<!--                        $('#city').html(content)-->
+<!--                    },-->
+<!--                });-->
+<!--            });-->
+<!--            $("#city").change(function(){-->
+<!--                var city = $(this).val();-->
+<!--                alert("city改变了");-->
+<!--                $.ajax({-->
+<!--                    url: '/id/get_county/',-->
+<!--                    data:{"city":$(this).val()},-->
+<!--                    type: 'GET',-->
+<!--                    dataType: 'json',-->
+<!--                    success: function (data) {-->
+<!--                        var content='';-->
+<!--                        $.each(data, function(i, item){-->
+<!--                            content+='<option value='+item.county_name+'>'+item.county_name+'</option>'-->
+<!--                        });-->
+<!--                        $('#county').html(content)-->
+<!--                    },-->
+<!--                });-->
+<!--            });-->
+<!--        </script>-->
     </form>
 
 <!--    <select name="province" id="province">-->

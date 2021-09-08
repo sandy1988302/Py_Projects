@@ -9,4 +9,5 @@ urlpatterns = [
     path('get/', views.get_id, name="get_id"),
     # path('province/', views.province, name="province"),
     path('get_city/', views.get_city, name="get_city"),
+    path('get_county/', views.get_county, name="get_county"),
 ]
