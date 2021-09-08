@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <title>生成身份证号码</title>
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!--    <script type="text/javascript" language="JavaScript">main();</script>-->
 </head>
 <body>
     <form enctype="multipart/form-data" action="/id/get/" method="post">
@@ -22,58 +20,18 @@
         <select name="county" id="county">
             <option value="县级行政区划">--县级行政区划--</option>
         </select>
-        <input type="submit"  value="生成身份证号码">
+        <br/>
+        <label>性别</label>
+        <select name="sex" id="sex">
+            <option value="male">男性</option>
+            <option value="female">女性</option>
+        </select>
+        <br/>
+        <label>出生日期，格式为YYYYMMDD【如19990108】</label>
+        <input type="type" name="birthday_code" maxlength="8" minlength="8" pattern="[0-9]">
+        <input type="submit" value="生成身份证号码">
         {% load static %}
         <script type="text/javascript" language="JavaScript" charset="utf-8" src="{% static "js/build.js" %}"></script>
-<!--        <script type="text/javascript" language="JavaScript">-->
-<!--            $("#province").change(function(){-->
-<!--                var province = $(this).val();-->
-<!--                alert("province改变了");-->
-<!--                $.ajax({-->
-<!--                    url: '/id/get_city/',-->
-<!--                    data:{"province":$(this).val()},-->
-<!--                    type: 'GET',-->
-<!--                    dataType: 'json',-->
-<!--                    success: function (data) {-->
-<!--                        var content='';-->
-<!--                        $.each(data, function(i, item){-->
-<!--                            content+='<option value='+item.city_name+'>'+item.city_name+'</option>'-->
-<!--                        });-->
-<!--                        $('#city').html(content)-->
-<!--                    },-->
-<!--                });-->
-<!--            });-->
-<!--            $("#city").change(function(){-->
-<!--                var city = $(this).val();-->
-<!--                alert("city改变了");-->
-<!--                $.ajax({-->
-<!--                    url: '/id/get_county/',-->
-<!--                    data:{"city":$(this).val()},-->
-<!--                    type: 'GET',-->
-<!--                    dataType: 'json',-->
-<!--                    success: function (data) {-->
-<!--                        var content='';-->
-<!--                        $.each(data, function(i, item){-->
-<!--                            content+='<option value='+item.county_name+'>'+item.county_name+'</option>'-->
-<!--                        });-->
-<!--                        $('#county').html(content)-->
-<!--                    },-->
-<!--                });-->
-<!--            });-->
-<!--        </script>-->
     </form>
-
-<!--    <select name="province" id="province">-->
-<!--        <option value="省级行政区划">&#45;&#45;省级行政区划&#45;&#45;</option>-->
-<!--    </select>-->
-<!--    <select name="city" id="city">-->
-<!--        <option value="地级行政区划">&#45;&#45;地级行政区划&#45;&#45;</option>-->
-<!--    </select>-->
-<!--    <select name="county" id="county">-->
-<!--        <option value="县级行政区划">&#45;&#45;县级行政区划&#45;&#45;</option>-->
-<!--    </select>-->
-<!--    <input type="submit"  value="生成身份证号码">-->
-
-    <button>构建</button>
 </body>
 </html>
