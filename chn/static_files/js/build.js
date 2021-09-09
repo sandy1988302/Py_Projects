@@ -30,4 +30,31 @@ $("#city").change(function(){
         },
     });
 });
+$("button").click(function(){
+   var province = $("#province").val();
+   var city = $("#city").val();
+   var county = $("#county").val();
+   var sex = $("#sex").val();
+   var birthday_code = $("#birthday_code").val();
+   alert(province+city+county+sex+birthday_code);
+   $.ajax({
+        url: '/id/get/',
+        data:{"province":$("#province").val(),
+              "city":$("#city").val(),
+              "county":$("#county").val(),
+              "sex":$("#sex").val(),
+              "birthday_code":$("#birthday_code").val(),
+              "id_quantity":$("#id_quantity").val()
+              },
+        type: 'POST',
+        dataType: 'json',
+        success: function (data){
+//            var content='';
+//            $.each(data, function(i, item){
+//                content+='<option value='+item.county_name+'>'+item.county_name+'</option>'
+//            });
+//            $('#county').html(content)
+        }
+   });
+});
 
