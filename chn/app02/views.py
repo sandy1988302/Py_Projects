@@ -50,17 +50,13 @@ def get_id(request):
         province_name = request.POST['province']
         city_name = request.POST['city']
         county_name = request.POST['county']
-        birthday_code = request.POST['birthday_code']
+        birthday_code = request.POST['birthday_code'].replace('-', '')
+        print(birthday_code)
         sex = request.POST['sex']
         id_quantity = int(request.POST['id_quantity'])
-        # print(province_name)
-        # print(city_name)
-        # print(county_name)
-        # print(birthday_code)
-        # print(sex)
         num_list = get_idnumber(province_name, county_name, birthday_code, sex, id_quantity)
-        print(num_list)
-        return render(request, "get_id.html", {"province_info_list": {'province_name': province_name}})
+        # print("num_list为"+str(num_list))
+        return JsonResponse(num_list, safe=False)
     else:
         print("开始获取省份列表")
         all_province = models.AdminDivisions.objects.filter(city_code='00').filter(county_code='00').values(
@@ -77,7 +73,7 @@ def get_city(request):
         if province_name:
             data = list(
                 models.AdminDivisions.objects.filter(province_name=province_name).values("city_name").distinct())
-            print(str(data))
+            # print(str(data))
             # city_name为空时（直辖市），设置city_name和province_name 一致
             if data[0]["city_name"] == '':
                 if len(data) == 1:
@@ -95,12 +91,12 @@ def get_county(request):
         if city_name:
             data = list(
                 models.AdminDivisions.objects.filter(city_name=city_name).values("county_name").distinct())
-            print(str(data))
+            # print(str(data))
             # city_name为空时（直辖市），使用province_name做查询条件
             if not data:
                 data = list(
                     models.AdminDivisions.objects.filter(province_name=city_name).values("county_name").distinct())
-                print(str(data))
+                # print(str(data))
     return JsonResponse(data, safe=False)
 
 
@@ -108,18 +104,18 @@ def get_idnumber(province_name, county_name, birthday_code, sex, id_quantity):
     conditions = {'province_name': province_name, 'county_name': county_name}
     code = models.AdminDivisions.objects.filter(**conditions).values("code").distinct()
     admin_code = code[0]['code']
-    print(admin_code)
+    # print(admin_code)
     idnumber_list = []
     while len(idnumber_list) < id_quantity:
         a = str(random.randint(100, 199))[1:]
-        print(a)
+        # print(a)
         if sex == 'male':
             b = str(random.choices([1, 3, 5, 7, 9])[0])
         else:
             b = str(random.choices([0, 2, 4, 6, 8])[0])
-        print(b)
+        # print(b)
         prenum = admin_code + birthday_code + a + b
-        print(prenum)
+        # print(prenum)
         c = get_check_code(prenum)
         idnumber_list.append(prenum + c)
     return idnumber_list

@@ -49,11 +49,11 @@ $("button").click(function(){
         type: 'POST',
         dataType: 'json',
         success: function (data){
-//            var content='';
-//            $.each(data, function(i, item){
-//                content+='<option value='+item.county_name+'>'+item.county_name+'</option>'
-//            });
-//            $('#county').html(content)
+            var content='';
+            $.each(data, function(i, item){
+                content+='<br/>'+item
+            });
+            $('#num_list').html(content)
         }
    });
 });
